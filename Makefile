@@ -4,8 +4,21 @@ SOURCES=Makefile README
 
 all : 
 
+install : python
+
+
+python : Python-2.7.2 
+	cd $< && ./configure --prefix=/cluster/home/ted/MedBook0/python
+	cd $< && make install
+
+python/bin/ez_setup.py: python
+	cd  python/bin/ && wget http://peak.telecommunity.com/dist/ez_setup.py
+	chmod 755 $@
+	python/bin/python python/bin/ez_setup.py
+
 Python-2.7.2 : Python-2.7.2.tgz
 	tar xvfz $<
+	touch $@
 
 Python-2.7.2.tgz: 
 	wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tgz
